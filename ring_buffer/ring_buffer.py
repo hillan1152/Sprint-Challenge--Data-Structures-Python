@@ -28,14 +28,15 @@ class RingBuffer:
                 self.storage.add_to_head(item)
                 self.current == self.current.next
             else:
-                # delete the current value
-                self.storage.delete(self.current)
-                # add item to that value
-                self.current = item
-                self.current.next == self.current
                 # make current the next value
                 if self.current.next is None:
                     self.current == self.current.head.value
+                # HOW DO I ADD TO THE CURRENT SPOT WITHOUT NEEDING TO REMOVE THE HEAD OR TAIL???
+                if self.current.next is not None:
+                    # delete the current value
+                    self.current == item
+                    # make the next item the current value
+                    self.current = self.current.next
         # if list is empty OR less than capacity, add to tail
         self.storage.add_to_tail(item)
 
@@ -44,7 +45,6 @@ class RingBuffer:
         list_buffer_contents = []
 
         # TODO: Your code here
-
         return list_buffer_contents
 
 # ----------------Stretch Goal-------------------
