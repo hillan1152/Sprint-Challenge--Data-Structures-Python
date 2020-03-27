@@ -1,4 +1,12 @@
 from doubly_linked_list import DoublyLinkedList
+# UNDERSTAND:
+#   Has a fixed size = capacity
+#       The CAPACITY IS WHAT IS BEING PASSED IN THE RINGBUFFER
+#   When capacity is full & add new element, oldest element is overwritten--- LRU CACHE
+#   Methods:
+#       Append - adds elements to buffer
+#       Get - returns ALL elements in the buffer list in their given order
+#             should not return NONE
 
 
 class RingBuffer:
@@ -6,16 +14,37 @@ class RingBuffer:
         self.capacity = capacity
         self.current = None
         self.storage = DoublyLinkedList()
+    # I CAN USE CURRENT AS A CURSOR OVER THE OLDEST POSSIBLE ITEM, TO REPLACE WHEN IT IS
 
     def append(self, item):
-        pass
+        if self.storage.length == self.capacity:
+            # if nothing is selected as current, make it the head
+            if self.current is None:
+                # make the head current
+                self.storage.head == self.current
+            # if the current is the head, delete the value, replace the head, and create next current value
+            if self.current.value == self.storage.head.value:
+                self.storage.remove_from_head()
+                self.storage.add_to_head(item)
+                self.current == self.current.next
+            else:
+                # make current the next value
+                if self.current.next is None:
+                    self.current == self.current.head.value
+                # HOW DO I ADD TO THE CURRENT SPOT WITHOUT NEEDING TO REMOVE THE HEAD OR TAIL???
+                if self.current.next is not None:
+                    # delete the current value
+                    self.current == item
+                    # make the next item the current value
+                    self.current = self.current.next
+        # if list is empty OR less than capacity, add to tail
+        self.storage.add_to_tail(item)
 
     def get(self):
         # Note:  This is the only [] allowed
         list_buffer_contents = []
 
         # TODO: Your code here
-
         return list_buffer_contents
 
 # ----------------Stretch Goal-------------------
@@ -30,3 +59,10 @@ class ArrayRingBuffer:
 
     def get(self):
         pass
+
+
+r = RingBuffer(4)
+r.append('a')
+r.append('e')
+r.append('i')
+print(r.append('o'))
